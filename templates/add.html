@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head lang="en">
+        <!-- Page encoding -->
+        <meta charset="UTF-8">
+
+        <!-- View of the page -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>LogIT: Add Expenses</title>
+        <link href="/static/images/favicon.svg" rel="icon">
+
+        <!-- Styles and Bootstrap -->
+        <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/styles/styles.css">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="/">
+            <img src="/static/images/logo.svg" alt="logo" class="logo">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link btn btn-light" href="/">Home</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link btn btn-light" href="/add">Add</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link btn btn-light" href="/statistics">Statistics</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link btn btn-light" href="/history">History</a>
+              </li>
+            </ul>
+
+            <ul class="navbar-nav mr-right">
+              <li class="nav-item active">
+                <a class="account btn btn-light" href="/account">Account</a>
+              </li>
+              <li class="nav-item active">
+                <a class="logout btn btn-light" href="/logout">Sign Out</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="container-fluid add-container">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-12 col-lg-10 col-xl-3 col-xxl mx-auto container-fluid box add-box">
+                <h1 class="mb-4 page-title">Add an expense</h1>
+                <hr class="my-4" />
+                    <form action="/add" method="post">
+                        <div class="form-group">
+                            <select class="form-select dropdown" aria-label="Default select example" name="type" required>
+                                <option selected disabled>Category</option>
+                                {% for row in rows %}
+                                    <option class="option" value="{{ row.name }}">{{ row.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="sr-only">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Name" autocomplete="off" required maxlength="32">
+                        </div>
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" placeholder="Price" name="amount" autocomplete="off" required>
+                          <span class="input-group-text money-symbol">{{ currency }}</span>
+                        </div>
+                        <div class="form-group mb-4">
+                            <input type="date" id="date" name="date" class="form-control" required max="{{ today }}">
+                            {% if error %}
+                                <p class="error add">{{ error }}</p>
+                            {% endif %}
+                            {% if success %}
+                                <p class="success add">{{ success }}</p>
+                            {% endif %}
+                        </div>
+
+                        <button name="submit" id="login" class="btn btn-block submit-btn mb-4" type="submit">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <footer class="text-center footer add-footer" style="background-color: #fff;">
+          <div class="container pt-4">
+              © 2021 Copyright: <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">me</a>
+          </div>
+        </footer>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    </body>
+
+</html>

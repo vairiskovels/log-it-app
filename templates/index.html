@@ -1,0 +1,167 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{%block head%}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      google.charts.setOnLoadCallback(drawBasic);
+
+      function drawChart() {
+
+        var pie_data = google.visualization.arrayToDataTable([
+          ['Category', 'Times'],
+          {% for dict in rows %}
+              {% for dict_item in dict %}
+                  ['{{dict_item.Type}}', {{dict_item.Price}}],
+              {% endfor %}
+          {% endfor %}
+        ]);
+
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+          var box_left = 15;
+          var box_top = 40;
+        }else{
+          var box_left = 40;
+          var box_top = 60;
+        }
+
+        var pie_options = {
+          title: 'Spendings: Per category ({{ currency }})',
+          pieSliceText: 'label',
+          slices: {0: {color: '{{ rows[0][0].color}}'}, 1:{color: '{{ rows[1][0].color}}'}, 2:{color: '{{ rows[2][0].color}}'}, 3: {color: '{{ rows[3][0].color}}'}, 4:{color: '{{ rows[4][0].color}}'}, 5:{color: '{{ rows[5][0].color}}'}, 6:{color: '{{ rows[6][0].color}}'}, 7:{color: '{{ rows[7][0].color}}'}, 8:{color: '{{ rows[8][0].color}}'}},
+          chartArea:{left:box_left,top:box_top,bottom:30,width:"100%",height:"100%"}
+        };
+
+        var pie_chart = new google.visualization.PieChart(document.getElementById('piechart-index'));
+
+        var formatter = new google.visualization.NumberFormat(
+            {prefix: '{{currency}}', negativeColor: 'red', negativeParens: true});
+        formatter.format(pie_data, 1);
+
+        {% if rows[0]|length > 0 %}
+          pie_chart.draw(pie_data, pie_options);
+        {% endif %}
+      }
+    </script>
+{% endblock %}
+
+{% block main %}
+<div class="index-container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-10 col-lg-8 col-xl-10 mx-auto statistics-container">
+            <h1 class="mb-4 page-title">LogIT - Smartest way to track expenses</h1>
+            <hr class="my-4" />
+
+            <div class="row index-row">
+                <div class="col-12 col-lg-6 col-xl-6 chart-box">
+                  <div id="piechart-index" class="container-fluid statistics-box pie-chart pie-chart-index col-12"></div>
+                  <a class="btn btn-block submit-btn mb-4 index-btn col-12" href="/add">Add an expense</a>
+                </div>
+
+                <div class="col-12 col-lg-6 col-xl-6 tile-box">
+                  <div class="row row-second">
+                      <div class="card mb-3 col-5 col-xl-4" style="background-color: {{ rows[0][0].color}}">
+                          <div class="card-header">{{ rows[0][0].Type }}</div>
+                          <div class="card-body">
+                              <h5 class="card-title">{{ currency }}{{ rows[0][0].Price }}</h5>
+                          </div>
+                      </div>
+                      <div class="card mb-3 col-5 col-xl-4" style="background-color: {{ rows[1][0].color}}">
+                          <div class="card-header">{{ rows[1][0].Type }}</div>
+                          <div class="card-body">
+                              <h5 class="card-title">{{ currency }}{{ rows[1][0].Price }}</h5>
+                          </div>
+                      </div>
+                      <div class="card mb-3 col-5 col-xl-4" style="background-color: {{ rows[2][0].color}}">
+                          <div class="card-header">{{ rows[2][0].Type }}</div>
+                          <div class="card-body">
+                              <h5 class="card-title">{{ currency }}{{ rows[2][0].Price }}</h5>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row row-second">
+                      <div class="card mb-3 col-5 col-xl-4" style="background-color: {{ rows[3][0].color}}">
+                          <div class="card-header">{{ rows[3][0].Type }}</div>
+                          <div class="card-body">
+                              <h5 class="card-title">{{ currency }}{{ rows[3][0].Price }}</h5>
+                          </div>
+                      </div>
+                      <div class="card mb-3 col-5 col-xl-4" style="background-color: {{ rows[4][0].color}}">
+                          <div class="card-header">{{ rows[4][0].Type }}</div>
+                          <div class="card-body">
+                              <h5 class="card-title">{{ currency }}{{ rows[4][0].Price }}</h5>
+                          </div>
+                      </div>
+                      <div class="card mb-3 col-5 col-xl-4" style="background-color: {{ rows[5][0].color}}">
+                          <div class="card-header">{{ rows[5][0].Type }}</div>
+                          <div class="card-body">
+                              <h5 class="card-title">{{ currency }}{{ rows[5][0].Price }}</h5>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row row-second">
+                      <div class="card mb-3 col-5 col-xl-4" style="background-color: {{ rows[6][0].color}}">
+                          <div class="card-header">{{ rows[6][0].Type }}</div>
+                          <div class="card-body">
+                              <h5 class="card-title">{{ currency }}{{ rows[6][0].Price }}</h5>
+                          </div>
+                      </div>
+                      <div class="card mb-3 col-5 col-xl-4" style="background-color: {{ rows[7][0].color}}">
+                          <div class="card-header">{{ rows[7][0].Type }}</div>
+                          <div class="card-body">
+                              <h5 class="card-title">{{ currency }}{{ rows[7][0].Price }}</h5>
+                          </div>
+                      </div>
+                      <div class="card mb-3 col-5 col-xl-4" style="background-color: {{ rows[8][0].color}}">
+                          <div class="card-header">{{ rows[8][0].Type }}</div>
+                          <div class="card-body">
+                              <h5 class="card-title">{{ currency }}{{ rows[8][0].Price }}</h5>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+
+            <hr class="my-4 mobile-hr"/>
+
+            <div class="row">
+                <div class="index-table-container">
+                    <table class="table index-table" style="overflow-x:scroll">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col"><a style="color: black">Name</a></th>
+                                <th scope="col"><a style="color: black">Category</a></th>
+                                <th scope="col"><a style="color: black">Price</a></th>
+                                <th scope="col"><a style="color: black">Date</a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in history %}
+                                <tr style="background-color: {{ row.color }}">
+                                    <th scope="row">{{ loop.index }}</th>
+                                    <td>{{ row.Name }}</td>
+                                    <td>{{ row.Type }}</td>
+                                    {% if currency == '$' %}
+                                        <td>{{ currency }}{{ row.Price }}</td>
+                                    {% else %}
+                                        <td>{{ row.Price }}{{ currency }}</td>
+                                    {% endif %}
+                                    <td>{{ row.Date }}</td>
+                                </tr>
+                            {% endfor %}
+                         </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

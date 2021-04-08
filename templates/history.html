@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{%block styles%}
+<style>
+
+    .history-box {
+        padding: 60px;
+        margin-top: 60px;
+        height: {{ row_count }}px;
+    }
+
+    .history-container {
+        height: {{ row_count + 150 }}px;
+    }
+
+    @media all and (max-width: 1000px) {
+        .history-box {
+            margin-top: 0;
+            padding: 25px;
+        }
+
+        .table-container {
+            overflow: auto;
+            white-space: nowrap;
+        }
+
+        .history-container {
+            height: {{ row_count }}px;
+        }
+    }
+
+    .search_type {
+        color: #aaa;
+    }
+
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid history-container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-8 mx-auto container-fluid history-box">
+            <h1 class="mb-4 page-title">History</h1>
+            <hr class="my-4" />
+
+            <form class="form-inline float-sm-right" method="post">
+                  <div class="mx-sm-2 input-group mb-2">
+                        <select class="form-select dropdown" aria-label="Default select example" name="type" required onchange="this.form.submit()">
+                            {% if search_type %}
+                                <option selected class="search_type">{{ search_type }}</option>
+                                <option disabled class="search_type">Search by</option>
+                            {% else %}
+                                <option selected disabled class="search_type">Search by</option>
+                            {% endif %}
+                            <option>Name</option>
+                            <option>Category</option>
+                            <option>Price</option>
+                            <option>Date</option>
+                        </select>
+                  </div>
+                  <div class="mx-sm-2 input-group mb-2">
+                        {% if search_type == 'Name' %}
+                            <input type="input" name="input" class="form-control" id="input" placeholder="{{ search_type }}" autocomplete="off">
+                        {% elif search_type == 'Category' %}
+                            <select class="form-select dropdown" aria-label="Default select example" name="input" required>
+                                <option selected disabled>Category</option>
+                                {% for type in types %}
+                                    <option class="option" value="{{ type.name }}">{{ type.name }}</option>
+                                {% endfor %}
+                            </select>
+                        {% elif search_type == 'Price' %}
+                            <input type="input" name="input" class="form-control price-input" id="input" placeholder="{{ search_type }}" autocomplete="off">
+                            <span class="input-group-text money-symbol">{{ currency }}</span>
+                        {% elif search_type == 'Date' %}
+                            <input type="date" id="date" name="input" max="{{ today }}" class="form-control" required>
+                        {% else %}
+                            <input type="input" name="input" class="form-control" id="input" placeholder="Input" autocomplete="off">
+                        {% endif %}
+                  </div>
+                  <button type="submit" class="btn btn-primary mb-2 save-btn">Search</button>
+            </form>
+
+            <div class="table-container">
+                <table class="table table-hover" id="history-table" style="overflow-x:scroll">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col"><a href="{{url_for('history', type='Name')}}" style="color: black">Name</a></th>
+                            <th scope="col"><a href="{{url_for('history', type='Type')}}" style="color: black">Category</a></th>
+                            <th scope="col"><a href="{{url_for('history', type='Price')}}" style="color: black">Price</a></th>
+                            <th scope="col"><a href="{{url_for('history', type='Date')}}" style="color: black">Date</a></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                            <tr style="background-color: {{ row.color }}">
+                                <th scope="row">{{ loop.index }}</th>
+                                <td>{{ row.Name }}</td>
+                                <td>{{ row.Type }}</td>
+                                {% if currency == '$' %}
+                                    <td>{{ currency }}{{ row.Price }}</td>
+                                {% else %}
+                                    <td>{{ row.Price }}{{ currency }}</td>
+                                {% endif %}
+                                <td>{{ row.Date }}</td>
+                                <td>
+                                    <form action="/history?delete={{ row.id }}" method="post">
+                                        <button class="delete-btn" name="delete" value="delete" type="sumbit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                     </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

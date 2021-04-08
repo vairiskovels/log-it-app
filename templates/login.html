@@ -1,0 +1,50 @@
+{% extends "login_layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+      <main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
+          <div class="container">
+              <div class="card login-card">
+                  <div class="row no-gutters">
+
+                      <div class="col">
+                          <div class="card-body">
+                              <div class="brand-wrapper">
+                                    <img src="/static/images/logo.svg" alt="logo" class="logo">
+                              </div>
+
+                              <p class="login-card-description">Sign into your account</p>
+
+                              <form action="/login" method="post">
+                                  <div class="form-group">
+                                      <label for="username" class="sr-only">Username</label>
+                                      <input type="text" name="username" id="username" class="form-control" placeholder="Username" autocomplete="off" autofocus required>
+                                  </div>
+                                  <div class="form-group mb-4">
+                                      <label for="password" class="sr-only">Password</label>
+                                      <input type="password" name="password" id="password" class="form-control" placeholder="Password" autuocomplete="off" required>
+                                      {% if error %}
+                                            <p class="error">{{ error }}</p>
+                                      {% endif %}
+                                  </div>
+
+                                  <button name="submit" id="login" class="btn btn-block submit-btn mb-4" type="submit">Sign In</button>
+                              </form>
+
+                              <a href="/recover" class="forgot-password-link">Forgot password?</a>
+                              <p class="login-card-footer-text">Don't have an account? <a href="/register" class="text-reset">Register here</a></p>
+
+                              <nav class="login-card-footer-nav">
+                                  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Terms & Conditions</a>
+                              </nav>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </main>
+
+{% endblock %}

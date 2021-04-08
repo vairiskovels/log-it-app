@@ -1,0 +1,49 @@
+{% extends "login_layout.html" %}
+
+{% block title %}
+    Recover password
+{% endblock %}
+
+{% block main %}
+<main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
+          <div class="container">
+              <div class="card login-card">
+                  <div class="row no-gutters">
+
+                      <div class="col">
+                          <div class="card-body">
+                              <div class="brand-wrapper">
+                                  <img src="/static/images/logo.svg" alt="logo" class="logo">
+                              </div>
+
+                              <p class="login-card-description">Recover your password</p>
+
+                              <form action="/recover" method="post">
+                                  <div class="form-group">
+                                    <label for="email" class="sr-only">Email</label>
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email" autocomplete="off" autofocus required>
+                                </div>
+                                  <div class="form-group mb-4">
+                                    {% if error %}
+                                        <p class="error">{{ error }}</p>
+                                    {% endif %}
+                                    {% if success %}
+                                        <p class="success">{{ success }}<u>{{email}}</u></p>
+                                    {% endif %}
+                                  </div>
+
+                                  <button name="submit" id="login" class="btn btn-block submit-btn mb-4" type="submit">Recover</button>
+                              </form>
+
+                              <p class="login-card-footer-text">Remembered password? <a href="/login" class="text-reset">Log In here</a></p>
+
+                              <nav class="login-card-footer-nav">
+                                  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Terms & Conditions</a>
+                              </nav>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </main>
+{% endblock %}
