@@ -16,6 +16,7 @@ from datetime import timedelta, date
 from helpers import login_required
 
 # https://github.com/vairiskovels/log-it-app.git
+# postgres://imaapiuscnjbaq:3555f85d9f67ce2b42e1ff29108d880ca9a22163ba12177d13b60dc56b38e80a@ec2-54-228-139-34.eu-west-1.compute.amazonaws.com:5432/defrtcvo099c7g
 
 
 # Configure application
@@ -43,7 +44,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///database.db")
+db = SQL(os.getenv("DATABASE_URL"))
 
 @app.before_request
 def make_session_permanent():
