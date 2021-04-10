@@ -26,7 +26,7 @@
           ['Category', 'Times'],
           {% for dict in rows[0] %}
               {% for dict_item in dict %}
-                  ['{{dict_item.Type}}', {{dict_item.Price}}],
+                  ['{{dict_item.type}}', {{dict_item.price}}],
               {% endfor %}
           {% endfor %}
         ]);
@@ -56,7 +56,7 @@
       var data = google.visualization.arrayToDataTable([
         ['Name', 'Price', { role: 'style' }],
         {% for dict_item in rows[1] %}
-            ['{{dict_item.Name}}', {{dict_item.Price}}, '{{dict_item.color}}'],
+            ['{{dict_item.name}}', {{dict_item.price}}, '{{dict_item.color}}'],
         {% endfor %}
       ]);
 

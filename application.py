@@ -484,7 +484,7 @@ def statistics():
     # Gets total of each expense type for "Pie" chart
     for i in range(len(types)):
         if len(db.execute(f"SELECT Type FROM expenses WHERE user_id = ? AND type_id={i+1}", session["user_id"])) > 0:
-            rows[0].append(db.execute(f"SELECT SUM(Price), Type, color FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"]))
+            rows[0].append(db.execute(f"SELECT SUM(Price), type, color FROM expenses WHERE user_id = ? AND type_id = {i+1} GROUP BY type, color", session["user_id"]))
         else:
             rows[0].append(db.execute(f"SELECT name, color FROM types WHERE id={i+1}"))
             rows[0][i][0]['SUM(Price)'] = 0
@@ -496,7 +496,7 @@ def statistics():
         rows[0][i][0][new_key] = rows[0][i][0].pop(old_key)
 
     # Gets data for "Bar" chart
-    rows.append(db.execute("SELECT Name, Price, color FROM expenses WHERE user_id = ? ORDER BY Price DESC LIMIT 5", session["user_id"]))
+    rows.append(db.execute("SELECT name, price, color FROM expenses WHERE user_id = ? ORDER BY price DESC LIMIT 5", session["user_id"]))
 
     return render_template("statistics.html", rows=rows, currency=get_user_currency())
 
