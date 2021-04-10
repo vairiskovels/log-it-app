@@ -77,7 +77,6 @@ def index():
         # If user has logged an expense in this category
         if len(db.execute(f"SELECT type FROM expenses WHERE user_id = ? AND type_id={i+1}", session["user_id"])) > 0:
 
-            #print(db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"]))
 
             # If total of category is integer
             if db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"])[0]['round'].is_integer():
@@ -92,13 +91,15 @@ def index():
             rows.append(db.execute(f"SELECT name, color FROM types WHERE id={i+1}"))
             rows[i][0]['round'] = 0
 
+    print(rows)
+
     # Rename key names in dictionaries, so it fits Jinja syntax in html file
     for i in range(len(rows)):
-        new_key = "Price"
+        new_key = "price"
         if 'ROUND(SUM(Price)' in rows[i][0]:
             old_key = "ROUND(SUM(Price)"
         elif 'ROUND(SUM(Price), 2)' in rows[i][0]:
-            old_key = "ROUND(SUM(Price), 2)"
+            old_key = "round"
         else:
             old_key = "SUM(Price)"
         rows[i][0][new_key] = rows[i][0].pop(old_key)
