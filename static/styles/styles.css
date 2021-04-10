@@ -82,7 +82,7 @@ body {
 }
 
 .account-container {
-    height: 1350px;
+    height: 1000px;
 }
 
 @media all and (max-width: 1000px) {
@@ -96,7 +96,7 @@ body {
     }
 
     .account-container {
-        height: 1250px;
+        height: 1310px;
     }
 
 }
@@ -171,7 +171,6 @@ body {
         font-weight: bold;
         line-height: 20px;
         color: #fff;
-        margin-bottom: 24px;
     }
 }
 
