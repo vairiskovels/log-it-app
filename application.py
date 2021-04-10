@@ -77,10 +77,10 @@ def index():
         # If user has logged an expense in this category
         if len(db.execute(f"SELECT type FROM expenses WHERE user_id = ? AND type_id={i+1}", session["user_id"])) > 0:
 
-            print(db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"]))
+            #print(db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"]))
 
             # If total of category is integer
-            if db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"])[0]['price'].is_integer():
+            if db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"])[0]['round'].is_integer():
                 rows.append(db.execute(f"SELECT SUM(price), Type, color FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"]))
 
             # If total of category has floating point
