@@ -553,7 +553,7 @@ def history():
 
     # By default it gets sorted by the date added in descending order
     else:
-        rows = db.execute(f"SELECT * FROM expenses WHERE user_id = ? ORDER BY Date DESC", session["user_id"])
+        rows = db.execute(f"SELECT * FROM expenses WHERE user_id = ? ORDER BY date DESC", session["user_id"])
         order_num *= -1
 
     # For html div height
