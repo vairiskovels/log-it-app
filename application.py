@@ -91,7 +91,7 @@ def index():
             rows.append(db.execute(f"SELECT name, color FROM types WHERE id={i+1}"))
             rows[i][0]['round'] = 0
 
-    print(rows)
+    print(rows[0][0])
 
     # Rename key names in dictionaries, so it fits Jinja syntax in html file
     for i in range(len(rows)):
