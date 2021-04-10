@@ -85,12 +85,12 @@ def index():
 
             # If total of category has floating point
             else:
-                rows.append(db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) AS price, Type, color FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"]))
+                rows.append(db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) AS price, type, color FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"]))
                 print("GETS TO FLOAT")
 
         # If user hasn't logged an expense in this category
         else:
-            rows.append(db.execute(f"SELECT name, color FROM types WHERE id={i+1}"))
+            rows.append(db.execute(f"SELECT name AS type, color FROM types WHERE id={i+1}"))
             rows[i][0]['price'] = 0
 
     print(rows)
