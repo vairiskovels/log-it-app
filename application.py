@@ -575,10 +575,10 @@ def delete():
     if request.method == "POST":
         password = request.form.get("password")
 
-        if not check_password_hash(user_password, password):
-            error = "Wrong password"
-        elif len(password) < 0:
+        if len(password) < 0:
             error = "Please fill password field"
+        elif not check_password_hash(user_password, password):
+            error = "Wrong password"
         else:
             success = "User deleted. We will miss u :("
             db.execute("DELETE FROM users WHERE id = ?", session["user_id"])
