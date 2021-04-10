@@ -17,7 +17,7 @@
           ['Category', 'Times'],
           {% for dict in rows %}
               {% for dict_item in dict %}
-                  ['{{dict_item.Type}}', {{dict_item.Price}}],
+                  ['{{dict_item.type}}', {{dict_item.price}}],
               {% endfor %}
           {% endfor %}
         ]);
@@ -147,14 +147,14 @@
                             {% for row in history %}
                                 <tr style="background-color: {{ row.color }}">
                                     <th scope="row">{{ loop.index }}</th>
-                                    <td>{{ row.Name }}</td>
-                                    <td>{{ row.Type }}</td>
+                                    <td>{{ row.name }}</td>
+                                    <td>{{ row.type }}</td>
                                     {% if currency == '$' %}
-                                        <td>{{ currency }}{{ row.Price }}</td>
+                                        <td>{{ currency }}{{ row.price }}</td>
                                     {% else %}
-                                        <td>{{ row.Price }}{{ currency }}</td>
+                                        <td>{{ row.price }}{{ currency }}</td>
                                     {% endif %}
-                                    <td>{{ row.Date }}</td>
+                                    <td>{{ row.date }}</td>
                                 </tr>
                             {% endfor %}
                          </tbody>
