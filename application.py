@@ -580,7 +580,6 @@ def delete():
         elif not check_password_hash(user_password, password):
             error = "Wrong password"
         else:
-            success = "User deleted. We will miss u :("
             db.execute("DELETE FROM users WHERE id = ?", session["user_id"])
 
             # Forget any user_id
