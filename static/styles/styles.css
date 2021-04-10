@@ -77,6 +77,10 @@ body {
     text-decoration: none;
 }
 
+.header:hover {
+    text-decoration: none;
+}
+
 @media all and (max-width: 1000px) {
     .container-fluid {
         height: 1100px;
