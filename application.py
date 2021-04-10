@@ -563,6 +563,12 @@ def history():
 
     return render_template("history.html", rows=rows, types=types, search_type=search_type, row_count=row_count, row_count_mobile=row_count_mobile, today=today, currency=get_user_currency(), delete=delete)
 
+@app.route("/delete")
+@login_required
+def delete():
+
+    return render_template("delete.html")
+
 @app.route("/dont")
 @login_required
 def dont():
