@@ -539,11 +539,15 @@ def history():
         return redirect("/history")
 
     # If user is searching by anything but price
-    if deep_search and search_name and search_type != 'Price' and search_type != None:
+    if deep_search and search_name and search_type != 'Price' and search_type != 'Date' and search_type != None:
         rows = db.execute(f"SELECT * FROM expenses WHERE {search_type} LIKE '%{search_name}%' AND user_id = ?", session["user_id"])
 
     # If user is searching by excatly the price inputed
-    elif deep_search and search_name and search_type != None:
+    elif deep_search and search_name and search_type == 'Price':
+        rows = db.execute(f"SELECT * FROM expenses WHERE {search_type} = '{search_name}' AND user_id = ?", session["user_id"])
+
+    # If user is searching by excatly the date inputed
+    elif deep_search and search_name and search_type == 'Date':
         rows = db.execute(f"SELECT * FROM expenses WHERE {search_type} = '{search_name}' AND user_id = ?", session["user_id"])
 
     # If user is sorting by expense type (Ascending or Descending)
