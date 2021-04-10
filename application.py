@@ -563,9 +563,25 @@ def history():
 
     return render_template("history.html", rows=rows, types=types, search_type=search_type, row_count=row_count, row_count_mobile=row_count_mobile, today=today, currency=get_user_currency(), delete=delete)
 
-@app.route("/delete")
+@app.route("/delete", methods=["GET", "POST"])
 @login_required
 def delete():
+    error = None
+    success = None
+
+    rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
+    user_password = rows[0]["password"]
+
+    if request.method == "POST":
+        password = request.form.get("password")
+
+        if not check_password_hash(user_password, password):
+            error = "Wrong password"
+        elif len(password) < 0:
+            error = "Please fill password field"
+        else:
+            success = "User deleted. We will miss u :("
+            db.execute("DELETE FROM users WHERE id = ?", session["user_id"])
 
     return render_template("delete.html")
 
