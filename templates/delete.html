@@ -21,7 +21,7 @@
                               <form action="/delete" method="post">
                                   <div class="form-group">
                                     <label for="password" class="sr-only">Enter your password to delete your account</label>
-                                    <input type="password" name="password" id="password" class="form-control" placeholder="New password (8 chararcters)" autocomplete="off" minlength="8" required>
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="Your password" autocomplete="off" minlength="8" required>
                                   </div>
                                   <div class="form-group mb-4">
                                       {% if error %}
@@ -32,10 +32,10 @@
                                       {% endif %}
                                   </div>
 
-                                  <button name="submit" id="login" class="btn btn-block submit-btn mb-4" type="submit">Recover</button>
+                                  <button name="submit" id="login" class="btn btn-block btn-danger submit-btn mb-4" type="submit">Delete account</button>
                               </form>
 
-                              <p class="login-card-footer-text">Remembered password? <a href="/login" class="text-reset">Log In here</a></p>
+                              <p class="login-card-footer-text">Changed your mind? <a href="/" class="text-reset">Click here</a></p>
 
                               <nav class="login-card-footer-nav">
                                   <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Terms & Conditions</a>
