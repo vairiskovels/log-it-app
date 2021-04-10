@@ -43,7 +43,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure CS50 Library to use SQLite database
+# Configure CS50 Library to use PostgreSQL database
 db = SQL(os.getenv("DATABASE_URL").replace("://", "ql://", 1))
 
 @app.before_request
@@ -77,8 +77,10 @@ def index():
         # If user has logged an expense in this category
         if len(db.execute(f"SELECT type FROM expenses WHERE user_id = ? AND type_id={i+1}", session["user_id"])) > 0:
 
+            print(db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"])[0])
+
             # If total of category is integer
-            if db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"])[0]["ROUND(SUM(price), 2)"].is_integer():
+            if db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"])[0].is_integer():
                 rows.append(db.execute(f"SELECT SUM(price), Type, color FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"]))
 
             # If total of category has floating point
