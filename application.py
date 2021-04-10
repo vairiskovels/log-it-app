@@ -80,27 +80,30 @@ def index():
 
             # If total of category is integer
             if db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"])[0]['round'].is_integer():
-                rows.append(db.execute(f"SELECT SUM(price), type, color FROM expenses WHERE user_id = ? AND type_id = {i+1} GROUP BY price, type, color", session["user_id"]))
+                rows.append(db.execute(f"SELECT SUM(price) AS price, type, color FROM expenses WHERE user_id = ? AND type_id = {i+1} GROUP BY price, type, color", session["user_id"]))
                 print("GETS TO INTEGER")
 
             # If total of category has floating point
             else:
-                rows.append(db.execute(f"SELECT ROUND(SUM(price)::numeric, 2), Type, color FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"]))
+                rows.append(db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) AS price, Type, color FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"]))
                 print("GETS TO FLOAT")
 
         # If user hasn't logged an expense in this category
         else:
             rows.append(db.execute(f"SELECT name, color FROM types WHERE id={i+1}"))
-            rows[i][0]['round'] = 0
+            rows[i][0]['price'] = 0
 
     print(rows)
 
     # Rename key names in dictionaries, so it fits Jinja syntax in html file
     for i in range(len(rows)):
+        '''
+        if 'sum' in rows[i][0]:
+
         new_key = "price"
         old_key = "round"
         rows[i][0][new_key] = rows[i][0].pop(old_key)
-
+        '''
         new_key_name = "type"
         old_key_name = "name"
         if rows[i][0].get('name') != None:
