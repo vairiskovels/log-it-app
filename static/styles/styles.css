@@ -172,6 +172,17 @@ body {
         line-height: 20px;
         color: #fff;
     }
+
+    .delete-btn {
+        padding: 13px 20px 12px;
+        background-color: #dc3545;
+        width: 100%;
+        border-radius: 4px;
+        font-size: 17px;
+        font-weight: bold;
+        line-height: 20px;
+        color: #fff;
+    }
 }
 
 .submit-btn {
