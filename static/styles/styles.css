@@ -72,6 +72,11 @@ body {
         height: 700px;
     }
 
+.header {
+    color: #000;
+    text-decoration: none;
+}
+
 @media all and (max-width: 1000px) {
     .container-fluid {
         height: 1100px;
