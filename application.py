@@ -247,7 +247,7 @@ def recover():
             name = rows[0]['name']
 
             # Sends a password recovery message to user's email
-            message = 'Subject: {}\n\n{}'.format("Password recovery", f"Hello, {name}\nYou have recently lost/forgot your password.\n\nYou can change it here: https://ide-0ea9f6c526a0481da1950c02852766cf-8080.cs50.ws/change_password?email={email}&key={key}")
+            message = 'Subject: {}\n\n{}'.format("Password recovery", f"Hello, {name}\nYou have recently lost/forgot your password.\n\nYou can change it here: https://log-it-app.herokuapp.com/change_password?email={email}&key={key}")
 
             server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
             server.login("help.logit@gmail.com", "135asus123")
