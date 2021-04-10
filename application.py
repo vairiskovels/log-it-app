@@ -581,6 +581,7 @@ def delete():
             error = "Wrong password"
         else:
             db.execute("DELETE FROM users WHERE id = ?", session["user_id"])
+            db.execute("DELETE FROM expenses WHERE user_id = ?", session["user_id"])
 
             # Forget any user_id
             session.clear()
