@@ -78,7 +78,7 @@ def index():
         if len(db.execute(f"SELECT Type FROM expenses WHERE user_id = ? AND type_id={i+1}", session["user_id"])) > 0:
 
             # If total of category is integer
-            if db.execute(f'SELECT ROUND(CAST(SUM("price") as numeric), 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}', session["user_id"])[0]['ROUND(CAST(SUM("price") as numeric), 2)'].is_integer():
+            if db.execute(f'SELECT ROUND(CAST(SUM("price" as numeric)), 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}', session["user_id"])[0]['ROUND(CAST(SUM("price" as numeric)), 2)'].is_integer():
                 rows.append(db.execute(f"SELECT SUM(price), Type, color FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"]))
 
             # If total of category has floating point
