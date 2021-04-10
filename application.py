@@ -96,15 +96,10 @@ def index():
     # Rename key names in dictionaries, so it fits Jinja syntax in html file
     for i in range(len(rows)):
         new_key = "price"
-        if 'ROUND(SUM(Price)' in rows[i][0]:
-            old_key = "ROUND(SUM(Price)"
-        elif 'ROUND(SUM(Price), 2)' in rows[i][0]:
-            old_key = "round"
-        else:
-            old_key = "SUM(Price)"
+        old_key = "round"
         rows[i][0][new_key] = rows[i][0].pop(old_key)
 
-        new_key_name = "Type"
+        new_key_name = "type"
         old_key_name = "name"
         if rows[i][0].get('name') != None:
             rows[i][0][new_key_name] = rows[i][0].pop(old_key_name)
