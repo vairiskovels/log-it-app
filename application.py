@@ -80,7 +80,7 @@ def index():
 
             # If total of category is integer
             if db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"])[0]['round'].is_integer():
-                rows.append(db.execute(f"SELECT SUM(price), type, color FROM expenses WHERE user_id = ? AND type_id = {i+1} GROUP BY SUM(price), type, color", session["user_id"]))
+                rows.append(db.execute(f"SELECT SUM(price), type, color FROM expenses WHERE user_id = ? AND type_id = {i+1} GROUP BY price, type, color", session["user_id"]))
                 print("GETS TO INTEGER")
 
             # If total of category has floating point
