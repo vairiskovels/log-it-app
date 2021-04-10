@@ -90,7 +90,7 @@ def index():
         # If user hasn't logged an expense in this category
         else:
             rows.append(db.execute(f"SELECT name, color FROM types WHERE id={i+1}"))
-            rows[i][0]['ROUND(SUM(Price)'] = 0
+            rows[i][0]['round'] = 0
 
     # Rename key names in dictionaries, so it fits Jinja syntax in html file
     for i in range(len(rows)):
