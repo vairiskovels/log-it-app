@@ -81,6 +81,10 @@ body {
     text-decoration: none;
 }
 
+.account-container {
+    height: 1350px;
+}
+
 @media all and (max-width: 1000px) {
     .container-fluid {
         height: 1100px;
