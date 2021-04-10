@@ -583,6 +583,13 @@ def delete():
             success = "User deleted. We will miss u :("
             db.execute("DELETE FROM users WHERE id = ?", session["user_id"])
 
+            # Forget any user_id
+            session.clear()
+
+            # Redirect user to login form
+            time.sleep(2)
+            return redirect("/")
+
     return render_template("delete.html", error=error, success=success)
 
 @app.route("/dont")
