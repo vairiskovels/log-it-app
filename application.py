@@ -42,7 +42,8 @@ db = SQL(os.getenv("DATABASE_URL").replace("://", "ql://", 1))
 
 @app.before_request
 def make_session_permanent():
-    session.permanent = True
+    #session.permanent = True
+    pass
 
 def get_user_currency():
     return db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])[0]["currency"]
