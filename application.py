@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.secret_key = "secret key"
+app.secret_key = "qwertyabc"
 #app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=90)
 app.permanent_session_lifetime = timedelta(days=5)
 
