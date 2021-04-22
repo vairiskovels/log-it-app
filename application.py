@@ -120,7 +120,6 @@ def login():
         else:
             # Remember which user has logged in
             session["user_id"] = rows[0]["id"]
-            session.permanent = True
 
             # Redirect user to home page
             return redirect("/")
