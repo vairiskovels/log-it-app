@@ -21,7 +21,7 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = "secret key"
-app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=10)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=90)
 
 global COOKIE_TIME_OUT
 COOKIE_TIME_OUT = 60*5*24 #5 minutes
