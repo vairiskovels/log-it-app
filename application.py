@@ -23,9 +23,6 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = "secret key"
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=90)
 
-global COOKIE_TIME_OUT
-COOKIE_TIME_OUT = 60*5*24 #5 minutes
-
 @app.after_request
 def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
