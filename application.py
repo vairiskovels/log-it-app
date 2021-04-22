@@ -21,7 +21,8 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = "secret key"
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=90)
+#app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=90)
+app.PERMANENT_SESSION_LIFETIME = timedelta(days=90)
 
 @app.after_request
 def after_request(response):
