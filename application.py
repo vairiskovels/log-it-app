@@ -15,10 +15,6 @@ from datetime import timedelta, date
 
 from helpers import login_required
 
-# https://github.com/vairiskovels/log-it-app.git
-# postgres://imaapiuscnjbaq:3555f85d9f67ce2b42e1ff29108d880ca9a22163ba12177d13b60dc56b38e80a@ec2-54-228-139-34.eu-west-1.compute.amazonaws.com:5432/defrtcvo099c7g
-
-
 # Configure application
 app = Flask(__name__)
 
@@ -76,42 +72,19 @@ def index():
     for i in range(len(types)):
         # If user has logged an expense in this category
         if len(db.execute(f"SELECT type FROM expenses WHERE user_id = ? AND type_id={i+1}", session["user_id"])) > 0:
-            #print("GETS TO IF LEN")
-
-            #print(db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"])[0]['round'])
-
+            
             # If total of category is integer
             if db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) FROM expenses WHERE user_id = ? AND type_id = {i+1}", session["user_id"])[0]['round'].is_integer():
                 rows.append(db.execute(f"SELECT SUM(price)::numeric::integer AS price, type, color FROM expenses WHERE user_id = ? AND type_id = {i+1} GROUP BY type, color", session["user_id"]))
-                #print("GETS TO INTEGER")
 
             # If total of category has floating point
             else:
                 rows.append(db.execute(f"SELECT ROUND(SUM(price)::numeric, 2) AS price, type, color FROM expenses WHERE user_id = ? AND type_id = {i+1} GROUP BY type, color", session["user_id"]))
-                #print("GETS TO FLOAT")
 
         # If user hasn't logged an expense in this category
         else:
             rows.append(db.execute(f"SELECT name AS type, color FROM types WHERE id={i+1}"))
             rows[i][0]['price'] = 0
-
-    print(rows)
-
-    '''
-    # Rename key names in dictionaries, so it fits Jinja syntax in html file
-    for i in range(len(rows)):
-
-        if 'sum' in rows[i][0]:
-
-        new_key = "price"
-        old_key = "round"
-        rows[i][0][new_key] = rows[i][0].pop(old_key)
-
-        new_key_name = "type"
-        old_key_name = "name"
-        if rows[i][0].get('name') != None:
-            rows[i][0][new_key_name] = rows[i][0].pop(old_key_name)
-    '''
 
     if request.method == "GET":
         return render_template("index.html", rows=rows, currency=get_user_currency(), history=history)
@@ -304,9 +277,6 @@ def change():
 
     urlparam.extend([email,key])
     return render_template("change_password.html",error=error, success=success, urlparam=urlparam)
-    if success:
-        time.sleep(1)
-        return redirect("/")
 
 @app.route("/change_password_from_profile", methods=["GET", "POST"])
 @login_required
