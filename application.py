@@ -21,8 +21,7 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = "qwertyabc"
-#app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=90)
-app.permanent_session_lifetime = timedelta(days=5)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=90)
 
 @app.after_request
 def after_request(response):
@@ -32,9 +31,9 @@ def after_request(response):
     return response
 
 # Configure session to use filesystem (instead of signed cookies)
-#app.config["SESSION_FILE_DIR"] = mkdtemp()
-#app.config["SESSION_PERMANENT"] = False
-#app.config["SESSION_TYPE"] = "filesystem"
+app.config["SESSION_FILE_DIR"] = mkdtemp()
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use PostgreSQL database
@@ -42,8 +41,7 @@ db = SQL(os.getenv("DATABASE_URL").replace("://", "ql://", 1))
 
 @app.before_request
 def make_session_permanent():
-    #session.permanent = True
-    pass
+    session.permanent = True
 
 def get_user_currency():
     return db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])[0]["currency"]
@@ -121,7 +119,6 @@ def login():
         else:
             # Remember which user has logged in
             session["user_id"] = rows[0]["id"]
-            session.permanent = True
 
             # Redirect user to home page
             return redirect("/")
